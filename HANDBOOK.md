@@ -1,232 +1,142 @@
 # enterprise-okf-ai Handbook
 
-Zero-to-mastery manual for understanding, running, validating, and releasing this repository.
+Operational and technical manual for onboarding, running, validating, and maintaining this repository.
 
-## 1. Project Purpose
+## Start Here
 
-`enterprise-okf-ai` is an enterprise knowledge engineering system that standardizes heterogeneous documentation into an OKF-style bundle and serves grounded retrieval + agentic Q&A.
+### Who this handbook is for
 
-What this project solves:
-- fragmented organizational knowledge
-- weak traceability in raw RAG systems
-- poor dependency/ownership reasoning without graph context
+- AI/ML engineers implementing or extending the pipeline
+- contributors preparing production-ready changes
+- operators validating end-to-end behavior before release
 
-Primary business outcome:
-- portable, versioned enterprise knowledge that both humans and AI systems can consume.
+### Role-based navigation
 
-## 2. Glossary and Definitions
+- New contributor path: [Tutorial lane](#tutorial-lane-first-successful-run) -> [Reference lane](#reference-lane-lookup-details)
+- Operator path: [How-to lane](#how-to-lane-common-operational-tasks) -> [Troubleshooting](#troubleshooting)
+- Architecture/review path: [Explanation lane](#explanation-lane-why-the-system-is-designed-this-way)
 
-- OKF-style bundle: Directory of markdown concept files with YAML frontmatter metadata and links.
-- Frontmatter: YAML metadata block at the top of each concept markdown page.
-- Concept: A typed knowledge object (`api`, `dataset`, `metric`, `playbook`, `table`, `glossary`).
-- Hybrid retrieval: Ranking strategy combining vector, lexical, graph, and structured signals.
-- Graph traversal retrieval: Expands context using knowledge graph neighbors of retrieved concepts.
-- Grounded answer: Agent answer backed by retrieved evidence and citations.
-- Abstention: Agent behavior to refuse unsupported answers instead of hallucinating.
-- Chroma manifest: Local index state file used for idempotent vector updates.
+## Tutorial Lane (first successful run)
 
-## 3. Prerequisites
+Goal: run the project end-to-end and produce validated artifacts.
 
-- OS: Linux/macOS/Windows (Linux used in this repository run evidence)
-- Python: 3.11+
-- Package manager: `uv`
-- Optional: `gh` (GitHub CLI) for repository publish and release automation
-
-## 4. Environment Setup
-
-### 4.1 Install dependencies
+### Step 1: install dependencies
 
 ```bash
 uv sync --extra dev --frozen
-```
-
-### 4.2 Environment variables
-
-Copy and edit:
-
-```bash
 cp .env.example .env
 ```
 
-Default key settings from `.env.example`:
-- `PROJECT_NAME=enterprise-okf-ai`
-- `OKF_DIR=okf_bundle`
-- `VECTOR_DIR=vector_db/chroma`
-- `GRAPH_DIR=knowledge_graph`
-- `LLM_PROVIDER=ollama`
-- `OPENAI_API_KEY=` (optional, only if OpenAI embeddings are used)
-
-### 4.3 Config files
-
-- `configs/app.yaml`: base local runtime defaults
-- `configs/pipeline.example.yaml`: sample pipeline profile for artifact-oriented runs
-
-## 5. Dependency Explanations
-
-Main runtime dependencies from `pyproject.toml` and why they exist:
-
-- `fastapi`, `uvicorn`: API service runtime
-- `typer`: CLI interface
-- `pydantic`, `pydantic-settings`: typed contracts and env config
-- `chromadb`: local vector store
-- `rank-bm25`: lexical retrieval layer
-- `networkx`, `pyvis`: graph modeling and graph visualization
-- `pypdf`, `python-docx`, `beautifulsoup4`, `pandas`: heterogeneous document ingestion
-- `langchain`, `langgraph`: orchestration surface alignment for AI workflows
-- `streamlit`: lightweight local UI
-- `loguru`, `orjson`, `pyyaml`: runtime logging and serialization
-
-Quality and release tooling:
-- `ruff`, `black`, `mypy`, `pytest`, `pre-commit`
-
-## 6. Repository Structure
-
-High-level map:
-
-```text
-.
-├── src/enterprise_okf_ai/      # canonical package
-├── src/ingest/                 # parser implementation
-├── src/rag/                    # retrieval internals
-├── src/vector_db/              # vector index internals
-├── src/graph/                  # graph builder internals
-├── src/validators/             # strict bundle validator internals
-├── docs/                       # architecture/format/retrieval/agent/eval docs
-├── scripts/                    # notebook and e2e execution helpers
-├── examples/                   # sample enterprise source docs + benchmarks
-├── notebooks/                  # tutorial notebook
-├── tests/                      # unit and integration coverage
-└── artifacts/                  # local run outputs (gitignored)
-```
-
-Note: `src/okfhub/` exists as a compatibility layer. New implementation focus is `src/enterprise_okf_ai/`.
-
-## 7. Code Walkthrough
-
-### 7.1 Ingestion and normalization
-
-- Entry: `enterprise_okf_ai.ingestion.IngestionService`
-- Parser: `ingest.parser.DocumentParser`
-- Supported types: `PDF`, `DOCX`, `Markdown`, `CSV`, `HTML`
-- Output: `ParsedDocument` objects with metadata, headings, tables, sections, chunks, and provenance.
-
-### 7.2 OKF bundle generation
-
-- Entry: `enterprise_okf_ai.okf.OKFBundleGenerator`
-- Responsibilities:
-  - infer concept type
-  - deterministic slug/id generation
-  - deduplication
-  - relationship resolution
-  - markdown + YAML file writing
-
-Required frontmatter keys:
-- `id`, `type`, `title`, `description`, `tags`, `resource`, `sources`, `relationships`, `timestamp`
-
-### 7.3 Validation
-
-- Entry: `enterprise_okf_ai.validators.BundleValidator`
-- Core checks (`validators.okf_validator.OKFValidator`):
-  - invalid/missing YAML frontmatter
-  - missing mandatory fields
-  - broken internal links
-  - duplicate concepts
-  - orphan documents
-  - circular references
-
-### 7.4 Knowledge graph
-
-- Entry: `enterprise_okf_ai.graph.GraphService`
-- Backend: `graph.builder.KnowledgeGraphBuilder`
-- Exports:
-  - JSON (`graph.json`)
-  - GraphML (`graph.graphml`)
-  - interactive HTML (`graph.html`)
-
-### 7.5 Embedding and vector indexing
-
-- Entry: `vector_db.indexer.OKFVectorIndexer`
-- Store wrapper: `ChromaVectorStore`
-- Behavior:
-  - idempotent indexing by file checksum + manifest
-  - chunk metadata mapped to frontmatter context
-
-### 7.6 Retrieval
-
-- Entry: `enterprise_okf_ai.retrieval.RetrievalService`
-- Core: `rag.retriever.HybridSearchRouter`
-- Routes:
-  - `auto`
-  - `vector`
-  - `keyword`
-  - `graph`
-  - `hybrid`
-
-Each hit returns score and explanation traces.
-
-### 7.7 Agent orchestration
-
-- Entry: `enterprise_okf_ai.agent.AgentOrchestrator`
-- Core: `agent.assistant.EnterpriseAssistant`
-- Tools used by agent:
-  - `search_okf_documents`
-  - `search_vector_db`
-  - `query_knowledge_graph`
-  - `read_okf_file`
-  - `summarize_evidence`
-
-Guardrails include evidence thresholds and unsupported-answer handling.
-
-### 7.8 API and UI
-
-- FastAPI app: `enterprise_okf_ai.api.create_app`
-- Streamlit app: `src/enterprise_okf_ai/ui/streamlit_app.py`
-- CLI entrypoint: `enterprise_okf_ai.cli.main`
-
-## 8. Training / Inference / Pipeline Flow
-
-This repository does **not** train ML models. It performs retrieval and agent inference over structured knowledge artifacts.
-
-Pipeline flow:
-1. Ingest source docs.
-2. Build OKF bundle.
-3. Validate bundle.
-4. Build graph.
-5. Index vectors.
-6. Retrieve evidence.
-7. Generate grounded answer with citations.
-8. Evaluate retrieval and agent behavior.
-
-## 9. Commands Used (Real)
-
-Commands executed in this repository during verification:
+### Step 2: run quality gates
 
 ```bash
 UV_CACHE_DIR=.uv-cache make check
+```
+
+Expected result:
+- ruff pass
+- mypy pass
+- pytest pass
+- notebook validator pass
+
+### Step 3: run strict end-to-end pipeline
+
+```bash
 UV_CACHE_DIR=.uv-cache make run-e2e
 ```
 
-Observed outputs (latest run):
-- lint/typecheck/tests/notebook validation passed
-- `45 passed, 1 warning` in pytest
-- notebook validator passed with `21` cells (`12` markdown, `9` code)
-- strict E2E summary indicates:
-  - `validation_errors = 0`
-  - `validation_warnings = 0`
-  - `graph_nodes = 9`
-  - `graph_edges = 17`
-  - API statuses all `200`
+Expected summary output:
+- `validation_errors = 0`
+- `validation_warnings = 0`
+- API checks all `200`
 
-Source of truth artifact:
+Artifacts produced:
+- `artifacts/e2e_real_run/okf_bundle/`
+- `artifacts/e2e_real_run/graph/`
+- `artifacts/e2e_real_run/vector_db/`
 - `artifacts/e2e_real_run/e2e_summary.json`
 
-## 10. Configuration Explanation
+## How-to Lane (common operational tasks)
 
-### 10.1 Runtime settings class
+### Build an OKF bundle from source docs
 
-`enterprise_okf_ai.core.settings.Settings` loads `.env` values and resolves relative paths against project root.
+```bash
+uv run enterprise-okf-ai build-okf examples/enterprise_docs artifacts/local_okf_bundle
+```
 
-Important fields:
+### Validate bundle integrity
+
+```bash
+uv run enterprise-okf-ai okf-validate --okf-dir artifacts/local_okf_bundle
+```
+
+### Build graph artifacts
+
+```bash
+uv run enterprise-okf-ai graph-build --okf-dir artifacts/local_okf_bundle
+```
+
+### Run retrieval query with traces
+
+```bash
+uv run enterprise-okf-ai retrieve-search "Which API updates order status?" --with-trace
+```
+
+### Run agentic Q&A
+
+```bash
+uv run enterprise-okf-ai agent-ask "Which API updates order status and what does it depend on?"
+```
+
+### Run agent benchmark evaluation
+
+```bash
+uv run enterprise-okf-ai agent-eval \
+  --benchmark-path examples/eval/agent_benchmark.json \
+  --output-json artifacts/agent_eval_report.json
+```
+
+### Start runtime services
+
+```bash
+make run-api
+make run-ui
+```
+
+### Generate handbook PDF
+
+```bash
+make handbook-pdf
+```
+
+## Reference Lane (lookup details)
+
+### Glossary
+
+- OKF-style bundle: markdown concept files with YAML frontmatter.
+- Concept: typed knowledge object (`api`, `dataset`, `metric`, `playbook`, `table`, `glossary`).
+- Hybrid retrieval: weighted combination of vector, lexical, graph, and structured signals.
+- Grounded answer: response based on retrieved evidence and citations.
+- Abstention: explicit unsupported-answer behavior when evidence is weak.
+
+### Core frontmatter contract
+
+Required keys in each concept document:
+- `id`
+- `type`
+- `title`
+- `description`
+- `tags`
+- `resource`
+- `sources`
+- `relationships`
+- `timestamp`
+
+### Configuration reference
+
+Runtime settings are loaded through `enterprise_okf_ai.core.settings.Settings`.
+
+Important settings:
 - `okf_dir`
 - `vector_dir`
 - `graph_dir`
@@ -235,135 +145,137 @@ Important fields:
 - `llm_chat_model`
 - `llm_embed_model`
 
-### 10.2 Config file usage pattern
+Config files:
+- `configs/app.yaml`
+- `configs/pipeline.example.yaml`
 
-- `configs/app.yaml` is a standard environment profile.
-- `configs/pipeline.example.yaml` documents an end-to-end run profile (source docs, artifact paths, retrieval and agent defaults).
+### Module map
 
-## 11. Validation, Evaluation, and Metrics
+Canonical package: `src/enterprise_okf_ai/`
 
-### 11.1 Validation metrics
+- `ingestion`: multi-format parsing + normalization
+- `okf`: deterministic bundle compilation
+- `validators`: strict metadata and link checks
+- `graph`: graph build/export services
+- `retrieval`: router + retrieval metrics wrappers
+- `agent`: orchestration + agent benchmark harness
+- `api`: FastAPI app factory and endpoints
+- `ui`: Streamlit interface
 
-From latest strict run:
-- bundle validation passed
-- zero errors, zero warnings
-- zero cycles and orphans
+Compatibility package:
+- `src/okfhub/` (legacy compatibility surface)
 
-### 11.2 Retrieval and graph metrics
+### Output artifacts and interpretation
 
-From latest strict run:
-- graph nodes: `9`
-- graph edges: `17`
-- indexed chunks: `11`
-- retrieval result count in summary query: `8`
-
-### 11.3 Agent evaluation metrics
-
-From latest strict run (`agent_evaluation.summary`):
-- `total_cases = 4`
-- `avg_concept_recall = 1.0`
-- `avg_answer_support = 0.5`
-- `supported_rate = 0.75`
-- `abstain_accuracy = 0.5`
-
-Interpretation:
-- Concept coverage is strong for this benchmark set.
-- Abstention reliability still needs improvement.
-
-## 12. Outputs and Interpretation
-
-Primary output directories (gitignored):
+Primary outputs from strict E2E:
 - `artifacts/e2e_real_run/okf_bundle/`
-- `artifacts/e2e_real_run/graph/`
-- `artifacts/e2e_real_run/vector_db/`
+- `artifacts/e2e_real_run/graph/graph.json`
+- `artifacts/e2e_real_run/graph/graph.graphml`
+- `artifacts/e2e_real_run/graph/graph.html`
+- `artifacts/e2e_real_run/vector_db/chroma.sqlite3`
 - `artifacts/e2e_real_run/e2e_summary.json`
 
-What to inspect first:
-1. `e2e_summary.json` for pass/fail and metrics
-2. `graph/graph.html` for visual relationship checks
-3. `okf_bundle/*.md` to validate readability and metadata quality
+Key current metrics (from latest strict run):
+- graph: `9` nodes / `17` edges
+- indexing: `9` files scanned / `11` chunks indexed
+- validation: `0` errors / `0` warnings
+- retrieval: `result_count = 8`
+- agent benchmark:
+  - `total_cases = 4`
+  - `avg_concept_recall = 1.0`
+  - `avg_answer_support = 0.5`
+  - `abstain_accuracy = 0.5`
 
-## 13. Debugging and Troubleshooting
+### Community and repository health files
 
-### 13.1 CLI command not found (`enterprise-okf-ai`)
+- [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
+- [`SECURITY.md`](SECURITY.md)
+- [`SUPPORT.md`](SUPPORT.md)
 
-Use module execution if scripts are not installed in shell path:
+## Explanation Lane (why the system is designed this way)
+
+### Why OKF-style markdown
+
+- portable and versionable in git
+- human-readable and agent-consumable
+- deterministic diffs for knowledge lifecycle changes
+
+### Why strict validation before retrieval/agent
+
+- prevents broken links from degrading graph and retrieval quality
+- surfaces concept duplication and cyclic references early
+- creates release-gate quality guarantees
+
+### Why hybrid retrieval instead of vector-only
+
+- vector retrieval captures semantic similarity
+- BM25 improves exact/schema/identifier lookups
+- graph signals improve relation-heavy enterprise questions
+- combined scoring gives more robust behavior across query types
+
+### Why explicit unsupported-answer logic
+
+- reduces confident hallucinations in weak-evidence scenarios
+- provides auditable safety behavior (`supported` flag and reason)
+
+## Troubleshooting
+
+### CLI command not found
+
+If `enterprise-okf-ai` is unavailable in shell path:
 
 ```bash
 PYTHONPATH=src uv run --no-sync python -m enterprise_okf_ai.cli.main --help
 ```
 
-### 13.2 Git repository appears invalid
+### Failing E2E due to stale artifacts
 
-If `git` reports not a repository despite `.git` directory presence, initialize a real git repo:
+Delete target artifact folder and rerun strict pipeline:
 
 ```bash
-git init
-git add .
-git commit -m "chore: initialize repository"
+rm -rf artifacts/e2e_real_run
+UV_CACHE_DIR=.uv-cache make run-e2e
 ```
 
-### 13.3 GitHub auth invalid
-
-If `gh auth status` reports invalid token:
+### GitHub CLI authentication issues
 
 ```bash
+gh auth status
 gh auth login -h github.com
 ```
 
-### 13.4 Chroma warning in tests
+### Non-fatal dependency warning in tests
 
-A deprecation warning from `chromadb` may appear (`asyncio.iscoroutinefunction`). It is non-fatal in current runs.
+Current tests may show a `chromadb` deprecation warning (`asyncio.iscoroutinefunction`). The run is still successful.
 
-## 14. Deployment and Execution Notes
+## Documentation Maintenance Policy
 
-Local service startup:
+- Treat `README.md` as onboarding + quick-run surface.
+- Treat `HANDBOOK.md` as operational deep reference.
+- Update docs whenever command behavior, outputs, or architecture changes.
+- For release candidates, regenerate and verify:
+  - `make check`
+  - `make run-e2e`
+  - `make handbook-pdf`
+- Keep major claims traceable to:
+  - repository source/config,
+  - executable command output,
+  - official external references.
 
-```bash
-make run-api
-make run-ui
-```
+## Appendix: Environment-specific notes from this session
 
-FastAPI endpoints to verify:
-- `POST /retrieval/search`
-- `POST /agent/ask`
-- `POST /agent/evaluate`
+This environment originally exposed a non-functional mounted `.git` path. A local git-dir workaround (`.git-local`) was used to run git operations safely in-session. This is not a project runtime requirement and should not be treated as standard setup for normal clones.
 
-CI workflows:
-- `.github/workflows/ci.yml`
-- `.github/workflows/notebook-validation.yml`
-
-## 15. Best Practices and Lessons Learned
-
-- Keep bundle generation deterministic to preserve clean git diffs.
-- Treat validation as a release gate, not optional diagnostics.
-- Preserve retrieval traces and citations for auditability.
-- Track abstention metrics explicitly to reduce hallucination risk.
-- Use strict E2E runs before release tags.
-
-## 16. Release Workflow (Recommended)
-
-1. Run:
-
-```bash
-make check
-make run-e2e
-```
-
-2. Prepare release notes (`RELEASE_NOTES.md`) from real metrics.
-3. Ensure `gh auth status` is valid.
-4. Create/push repository and tag.
-5. Create GitHub release.
-
-## 17. Official References and Sources
+## Official References and Sources
 
 Project references:
-- Google Cloud OKF article:
+- Google Cloud OKF overview:
   - https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing
 - OKF specification:
   - https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 
-Official documentation for stack used in this repository:
+Official docs for stack used here:
 - uv: https://docs.astral.sh/uv/
 - FastAPI: https://fastapi.tiangolo.com/
 - Typer: https://typer.tiangolo.com/
@@ -379,9 +291,20 @@ Official documentation for stack used in this repository:
 - pytest: https://docs.pytest.org/
 - GitHub Actions: https://docs.github.com/actions
 
-Repository evidence files:
-- `artifacts/e2e_real_run/e2e_summary.json`
-- `pyproject.toml`
-- `Makefile`
-- `.github/workflows/ci.yml`
-- `.github/workflows/notebook-validation.yml`
+Documentation quality guidance used in this handbook rewrite:
+- GitHub README guidance:
+  - https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes
+- GitHub docs writing best practices:
+  - https://docs.github.com/en/contributing/writing-for-github-docs/best-practices-for-github-docs
+- Healthy contributions setup:
+  - https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions
+- GitHub Markdown syntax and linking:
+  - https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+- Diátaxis framework:
+  - https://diataxis.fr/
+- Write the Docs guide:
+  - https://www.writethedocs.org/guide/
+- Microsoft style quick start:
+  - https://learn.microsoft.com/en-us/contribute/content/style-quick-start
+- Microsoft headings/scannability guidance:
+  - https://learn.microsoft.com/en-us/style-guide/scannable-content/headings
