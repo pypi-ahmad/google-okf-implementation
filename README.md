@@ -161,6 +161,11 @@ Primary generated outputs:
 ## Help & Support
 
 - Troubleshooting guide: [`HANDBOOK.md`](HANDBOOK.md)
+- Deep-dive engineering blog: [`docs/blog.md`](docs/blog.md)
+- Publication-ready variants:
+  - Medium: [`docs/blog-medium.md`](docs/blog-medium.md)
+  - LinkedIn: [`docs/blog-linkedin.md`](docs/blog-linkedin.md)
+  - Substack: [`docs/blog-substack.md`](docs/blog-substack.md)
 - Project issues: <https://github.com/pypi-ahmad/google-okf-implementation/issues>
 - Security reports: [`SECURITY.md`](SECURITY.md)
 
@@ -186,6 +191,7 @@ Primary generated outputs:
 - Retrieval notes: [`docs/retrieval.md`](docs/retrieval.md)
 - Agent notes: [`docs/agent.md`](docs/agent.md)
 - Evaluation notes: [`docs/evaluation.md`](docs/evaluation.md)
+- In-depth technical blog: [`docs/blog.md`](docs/blog.md)
 - End-to-end evidence artifact: [`artifacts/e2e_real_run/e2e_summary.json`](artifacts/e2e_real_run/e2e_summary.json)
 
 ### Official stack documentation
