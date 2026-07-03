@@ -64,7 +64,8 @@ STOPWORDS = {
     "who",
     "with",
 }
-RESERVED_FILES = {"index.md", "log.md", "readme.md"}
+# OKF reserves `index.md` and `log.md`. `README.md` is a normal concept filename under the spec.
+RESERVED_FILES = {"index.md", "log.md"}
 
 
 @dataclass(slots=True)

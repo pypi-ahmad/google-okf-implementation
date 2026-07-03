@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 from enterprise_okf_ai.ingestion import IngestionService
@@ -13,6 +14,10 @@ from ingest.parser import DocumentParser
 def main() -> None:
     source_dir = Path("examples/enterprise_docs")
     output_dir = Path("examples/sample_okf_bundle")
+
+    if output_dir.exists():
+        shutil.rmtree(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     parser = DocumentParser(chunk_size_chars=1200, chunk_overlap_chars=150, recover_errors=True)
     ingestion = IngestionService(parser=parser)

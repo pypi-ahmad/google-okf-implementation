@@ -167,7 +167,7 @@ def test_okf_bundle_markdown_relationship_links_are_github_readable(tmp_path: Pa
     OKFBundleGenerator(output_dir=output_root, source_dir=source_root).build(docs)
 
     for md_file in sorted(output_root.rglob("*.md")):
-        if md_file.name == "README.md":
+        if md_file.name.lower() in {"index.md", "log.md"}:
             continue
 
         post = frontmatter.load(md_file)

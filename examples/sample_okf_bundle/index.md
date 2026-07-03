@@ -1,3 +1,7 @@
+---
+okf_version: "0.1"
+---
+
 # OKF Knowledge Bundle
 
 Portable enterprise knowledge bundle in markdown + YAML frontmatter.

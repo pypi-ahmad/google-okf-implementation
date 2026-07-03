@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import shutil
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -155,6 +156,12 @@ class OKFBundleGenerator:
 
     def build(self, documents: list[ParsedDocument]) -> BundleBuildReport:
         """Build OKF bundle from normalized ingestion documents."""
+
+        # Treat the bundle directory as a build artifact and wipe it on each run to
+        # avoid stale files from older versions (e.g., a bundle-root README.md).
+        if self.output_dir.exists():
+            shutil.rmtree(self.output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
 
         logger.info("Building OKF bundle from {} parsed documents", len(documents))
         candidates = self._collect_candidates(documents)
@@ -632,7 +639,19 @@ class OKFBundleGenerator:
         return relative.as_posix()
 
     def _write_index(self, concepts: list[KnowledgeObject]) -> Path:
+        """Write the bundle-root OKF index.
+
+        OKF v0.1 reserves `index.md` (and `log.md`) and defines `index.md` as an optional
+        progressive-disclosure listing. The spec additionally permits *only* the
+        bundle-root `index.md` to carry frontmatter, to declare the targeted OKF version
+        via `okf_version`.
+        """
+
         lines = [
+            "---",
+            'okf_version: "0.1"',
+            "---",
+            "",
             "# OKF Knowledge Bundle",
             "",
             "Portable enterprise knowledge bundle in markdown + YAML frontmatter.",
@@ -648,7 +667,7 @@ class OKFBundleGenerator:
         for concept in concepts:
             lines.append(f"- [{concept.title}]({concept.relative_path}) - `{concept.object_id}`")
 
-        index_path = self.output_dir / "README.md"
+        index_path = self.output_dir / "index.md"
         index_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
         return index_path
 

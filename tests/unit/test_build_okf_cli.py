@@ -45,4 +45,4 @@ Customer dimension with region and lifecycle metadata.
 
     assert (output_dir / "apis" / "orders-api.md").exists()
     assert (output_dir / "datasets" / "customer-profile-dataset.md").exists()
-    assert (output_dir / "README.md").exists()
+    assert (output_dir / "index.md").exists()

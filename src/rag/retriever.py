@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 SearchRoute = Literal["auto", "vector", "keyword", "graph", "hybrid"]
 
-RESERVED_FILES = {"index.md", "log.md", "readme.md"}
+# OKF reserves `index.md` and `log.md`. `README.md` is a concept document under the spec.
+RESERVED_FILES = {"index.md", "log.md"}
 TOKEN_PATTERN = re.compile(r"[a-zA-Z0-9_]+")
 
 GRAPH_INTENT_TERMS = {

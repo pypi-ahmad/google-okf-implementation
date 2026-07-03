@@ -12,7 +12,8 @@ from typing import Any
 import chromadb
 import yaml
 
-RESERVED_FILES = {"index.md", "log.md", "readme.md"}
+# OKF reserves `index.md` and `log.md`. `README.md` is a concept document under the spec.
+RESERVED_FILES = {"index.md", "log.md"}
 
 
 @dataclass(slots=True)

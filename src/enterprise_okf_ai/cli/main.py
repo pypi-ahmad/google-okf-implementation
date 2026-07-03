@@ -19,7 +19,7 @@ from enterprise_okf_ai.ingestion import IngestionService
 from enterprise_okf_ai.okf import OKFBundleGenerator
 from enterprise_okf_ai.reports import BundleHealthReporter
 from enterprise_okf_ai.retrieval import RetrievalService
-from enterprise_okf_ai.validators import BundleValidator
+from enterprise_okf_ai.validators import BundleValidator, OKFSpecConformanceValidator
 from ingest.parser import DocumentParser
 from vector_db.indexer import OKFVectorIndexer
 
@@ -97,6 +97,14 @@ def okf_validate(okf_dir: Path = typer.Option(Path("okf_bundle"), exists=True)) 
     """Validate an OKF bundle and emit diagnostics."""
 
     report = BundleValidator().validate(okf_dir)
+    typer.echo(json.dumps(report.to_dict(), indent=2, sort_keys=True))
+
+
+@app.command("okf-spec-validate")
+def okf_spec_validate(okf_dir: Path = typer.Option(Path("okf_bundle"), exists=True)) -> None:
+    """Validate OKF v0.1 spec conformance for a bundle (minimal rules)."""
+
+    report = OKFSpecConformanceValidator().validate(okf_dir)
     typer.echo(json.dumps(report.to_dict(), indent=2, sort_keys=True))
 
 

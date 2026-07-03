@@ -21,7 +21,9 @@ MANDATORY_FIELDS = [
     "relationships",
     "timestamp",
 ]
-RESERVED_FILES = {"index.md", "log.md", "readme.md"}
+# OKF v0.1 reserves only `index.md` and `log.md` (SPEC.md §3.1).
+# All other `.md` files are concept documents, including `README.md`.
+RESERVED_FILES = {"index.md", "log.md"}
 LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
 

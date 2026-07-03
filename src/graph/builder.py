@@ -14,7 +14,8 @@ from networkx.readwrite import json_graph
 from pyvis.network import Network
 
 LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
-RESERVED_FILES = {"index.md", "log.md", "readme.md"}
+# OKF reserves `index.md` and `log.md`. `README.md` is a concept document under the spec.
+RESERVED_FILES = {"index.md", "log.md"}
 TraversalDirection = Literal["out", "in", "both"]
 
 
