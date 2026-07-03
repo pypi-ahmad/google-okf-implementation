@@ -8,7 +8,7 @@ guided, zero-to-mastery learning path for OKF itself.
 
 ## Project Status
 
-`Beta` (`v0.2.0`): production-oriented architecture and validation
+`Beta` (`v0.3.0`): production-oriented architecture and validation
 gates are in place, the CLI-only golden path is verified end to end,
 and the docs are a full beginner-to-practitioner learning path. Agent
 abstention calibration and benchmark depth still need improvement (see
@@ -55,6 +55,10 @@ for exactly where it's drawn.
 
 Read in order — each is 5–15 minutes and ends with something concrete
 you did, not just read:
+
+**Two-track mental model:** docs 00–06 are *Track A* (OKF-the-spec).
+Docs 07–11 are *Track B* (this repo's stricter validation and full
+pipeline).
 
 | # | Doc | You'll be able to... |
 |---|-----|------------------------|

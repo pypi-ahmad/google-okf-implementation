@@ -70,7 +70,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     """Create FastAPI app instance with scaffold-ready runtime wiring."""
 
     cfg = settings or Settings()
-    app = FastAPI(title="enterprise-okf-ai", version="0.2.0")
+    app = FastAPI(title="enterprise-okf-ai", version="0.3.0")
 
     @app.get("/health")
     async def health() -> dict[str, str]:

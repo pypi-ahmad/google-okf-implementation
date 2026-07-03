@@ -1,5 +1,30 @@
 # Release Notes
 
+## v0.3.0
+
+Spec-accuracy and conformance hardening release: OKF bundles produced by
+this repo are now genuinely OKF v0.1 conformant (bundle-root `index.md`,
+no special-casing `README.md`), and the repo ships a spec-level
+conformance validator alongside the existing strict enterprise gate.
+
+### Highlights
+
+- **Fixed: generated bundles are spec-conformant** — `build-okf` now
+  writes a bundle-root `index.md` with optional `okf_version: "0.1"`
+  (OKF v0.1 §11) instead of a non-spec `README.md` without frontmatter.
+- **New: `okf-spec-validate` CLI command** — checks OKF v0.1 conformance
+  (the spec's minimal 3-rule bar) separately from this repo's stricter
+  `okf-validate` enterprise profile.
+- **Fixed: reserved filename handling** — tooling now treats only
+  `index.md` and `log.md` as reserved per the spec; `README.md` is a
+  normal concept filename and must have frontmatter if present.
+- **Fixed: deterministic rebuilds** — `build-okf` now overwrites the
+  output bundle directory each run to prevent stale files from older
+  versions (e.g. leftover `README.md`) breaking strict validation.
+- **Updated learning materials** — docs, sample bundle, and the tutorial
+  notebook now align with the spec-vs-enterprise distinction and the new
+  conformance tooling.
+
 ## v0.2.0
 
 Education-focused release: a zero-to-mastery OKF learning path, a fixed
