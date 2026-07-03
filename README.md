@@ -127,6 +127,16 @@ make run-api
 make run-ui
 ```
 
+### Handbook artifacts
+
+```bash
+make handbook-pdf
+```
+
+Outputs:
+- `HANDBOOK.md`
+- `HANDBOOK.pdf`
+
 ## Experiments / Workflow
 
 Verified project workflow in this repository:
