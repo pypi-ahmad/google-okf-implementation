@@ -21,6 +21,7 @@ from enterprise_okf_ai.reports import BundleHealthReporter
 from enterprise_okf_ai.retrieval import RetrievalService
 from enterprise_okf_ai.validators import BundleValidator
 from ingest.parser import DocumentParser
+from vector_db.indexer import OKFVectorIndexer
 
 app = typer.Typer(help="Enterprise OKF AI command-line interface")
 
@@ -137,6 +138,29 @@ def graph_build(okf_dir: Path = typer.Option(Path("okf_bundle"), exists=True)) -
             "graphml_path": artifacts.graphml_path.as_posix() if artifacts.graphml_path is not None else None,
         }
     )
+
+
+@app.command("index-build")
+def index_build(
+    okf_dir: Path = typer.Option(Path("okf_bundle"), exists=True, help="OKF bundle to index."),
+    vector_dir: Path | None = typer.Option(None, help="Chroma persist directory (defaults to Settings().vector_dir)."),
+) -> None:
+    """Build or refresh the local vector index for an OKF bundle.
+
+    This must be run (and re-run after any bundle change) before
+    `retrieve-search` or `agent-ask`, which read from the persisted
+    index rather than the bundle directly.
+    """
+
+    cfg = Settings()
+    target_vector_dir = vector_dir if vector_dir is not None else cfg.resolve(cfg.vector_dir)
+    indexer = OKFVectorIndexer(
+        okf_dir=okf_dir,
+        persist_dir=target_vector_dir,
+        embedding_fn=deterministic_embedding,
+    )
+    stats = indexer.index()
+    typer.echo(json.dumps({"vector_dir": str(target_vector_dir), **stats}, indent=2, sort_keys=True))
 
 
 @app.command("retrieve-search")

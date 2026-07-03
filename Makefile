@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test notebook-validate handbook-pdf check precommit-install run-api run-ui run-cli run-e2e
+.PHONY: install lint format typecheck test notebook-validate docs-check-links handbook-pdf check precommit-install run-api run-ui run-cli run-e2e
 
 UV_CACHE_DIR ?= .uv-cache
 
@@ -20,10 +20,13 @@ test:
 notebook-validate:
 	UV_CACHE_DIR=$(UV_CACHE_DIR) uv run --no-sync python scripts/validate_notebook.py notebooks/tutorial.ipynb
 
+docs-check-links:
+	UV_CACHE_DIR=$(UV_CACHE_DIR) uv run --no-sync python scripts/check_docs_links.py
+
 handbook-pdf:
 	UV_CACHE_DIR=$(UV_CACHE_DIR) uv run --no-sync python scripts/build_handbook_pdf.py
 
-check: lint typecheck test notebook-validate
+check: lint typecheck test notebook-validate docs-check-links
 
 precommit-install:
 	UV_CACHE_DIR=$(UV_CACHE_DIR) uv run --no-sync pre-commit install

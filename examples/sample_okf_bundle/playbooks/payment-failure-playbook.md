@@ -12,22 +12,7 @@ tags:
 resource: playbooks/payment_failure_playbook.md
 sources:
 - playbooks/payment_failure_playbook.md
-relationships:
-- type: references
-  target_id: api:orders-api
-  target_type: api
-  target_title: Orders API
-  path: apis/orders-api.md
-- type: references
-  target_id: dataset:customer-profile-dataset
-  target_type: dataset
-  target_title: Customer Profile Dataset
-  path: datasets/customer-profile-dataset.md
-- type: references
-  target_id: table:orders-fact
-  target_type: table
-  target_title: Orders Fact
-  path: tables/orders-fact.md
+relationships: []
 timestamp: '2026-07-02T21:01:21.967043+00:00'
 ---
 
@@ -43,9 +28,7 @@ Checkout payment error rate above 3% for 5 consecutive minutes.
 `enterprise-docs`, `examples`, `markdown`, `playbook`, `playbooks`
 
 ## Relationships
-- [Orders API](../apis/orders-api.md) (`api:orders-api`, type=`api`)
-- [Customer Profile Dataset](../datasets/customer-profile-dataset.md) (`dataset:customer-profile-dataset`, type=`dataset`)
-- [Orders Fact](../tables/orders-fact.md) (`table:orders-fact`, type=`table`)
+- none
 
 ## Knowledge Notes
 ### Excerpt 1

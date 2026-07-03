@@ -19,10 +19,15 @@ relationships:
   target_title: Orders API
   path: apis/orders-api.md
 - type: references
-  target_id: dataset:customer-profile-dataset
-  target_type: dataset
-  target_title: Customer Profile Dataset
-  path: datasets/customer-profile-dataset.md
+  target_id: playbook:incident-payment-outage
+  target_type: playbook
+  target_title: 'Incident: Payment Outage'
+  path: playbooks/incident-payment-outage.md
+- type: references
+  target_id: playbook:payment-failure-playbook
+  target_type: playbook
+  target_title: Payment Failure Playbook
+  path: playbooks/payment-failure-playbook.md
 timestamp: '2026-07-02T21:06:30.868038+00:00'
 ---
 
@@ -39,7 +44,8 @@ column,type,description,owner
 
 ## Relationships
 - [Orders API](../apis/orders-api.md) (`api:orders-api`, type=`api`)
-- [Customer Profile Dataset](../datasets/customer-profile-dataset.md) (`dataset:customer-profile-dataset`, type=`dataset`)
+- [Incident: Payment Outage](../playbooks/incident-payment-outage.md) (`playbook:incident-payment-outage`, type=`playbook`)
+- [Payment Failure Playbook](../playbooks/payment-failure-playbook.md) (`playbook:payment-failure-playbook`, type=`playbook`)
 
 ## Knowledge Notes
 ### Excerpt 1

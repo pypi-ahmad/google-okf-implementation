@@ -16,20 +16,20 @@ sources:
 - apis/orders_api_duplicate.md
 relationships:
 - type: references
-  target_id: dataset:customer-profile-dataset
-  target_type: dataset
-  target_title: Customer Profile Dataset
-  path: datasets/customer-profile-dataset.md
-- type: references
   target_id: metric:monthly-active-users
   target_type: metric
   target_title: Monthly Active Users
   path: metrics/monthly-active-users.md
 - type: references
-  target_id: table:orders-fact
-  target_type: table
-  target_title: Orders Fact
-  path: tables/orders-fact.md
+  target_id: playbook:incident-payment-outage
+  target_type: playbook
+  target_title: 'Incident: Payment Outage'
+  path: playbooks/incident-payment-outage.md
+- type: references
+  target_id: playbook:payment-failure-playbook
+  target_type: playbook
+  target_title: Payment Failure Playbook
+  path: playbooks/payment-failure-playbook.md
 timestamp: '2026-07-02T21:01:09.508841+00:00'
 ---
 
@@ -46,9 +46,9 @@ timestamp: '2026-07-02T21:01:09.508841+00:00'
 `api`, `apis`, `enterprise-docs`, `examples`, `markdown`
 
 ## Relationships
-- [Customer Profile Dataset](../datasets/customer-profile-dataset.md) (`dataset:customer-profile-dataset`, type=`dataset`)
 - [Monthly Active Users](../metrics/monthly-active-users.md) (`metric:monthly-active-users`, type=`metric`)
-- [Orders Fact](../tables/orders-fact.md) (`table:orders-fact`, type=`table`)
+- [Incident: Payment Outage](../playbooks/incident-payment-outage.md) (`playbook:incident-payment-outage`, type=`playbook`)
+- [Payment Failure Playbook](../playbooks/payment-failure-playbook.md) (`playbook:payment-failure-playbook`, type=`playbook`)
 
 ## Knowledge Notes
 ### Excerpt 1

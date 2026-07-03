@@ -1,10 +1,26 @@
-# OKF Format Guide
+# OKF Format Guide (This Repo's Enterprise Profile)
+
+> **Tutorial-first version of this material:** if you haven't already,
+> read [`docs/00-overview.md`](00-overview.md) through
+> [`docs/07-conformance-and-validation.md`](07-conformance-and-validation.md)
+> first. Those pages teach OKF v0.1 — the actual Google Cloud spec —
+> from zero, and explicitly separate spec requirements from this
+> repo's own conventions. This page is the terse reference version of
+> that same distinction, for after you've read the tutorial.
 
 ## Why OKF
 
-Open Knowledge Format (OKF-style) standardizes enterprise knowledge into portable markdown documents with structured YAML frontmatter. This project uses OKF-style bundles to make data easy for both humans and AI systems to consume.
+[Open Knowledge Format (OKF)](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
+is Google Cloud's v0.1 specification for representing knowledge as
+portable markdown documents with YAML frontmatter. This project
+generates and consumes bundles that are OKF-conformant but layer
+additional, **repo-specific** required fields on top of the spec for
+enterprise provenance and graph-building needs — see
+[`docs/05-frontmatter-and-fields.md`](05-frontmatter-and-fields.md) for
+the full spec-vs-extension breakdown. Nothing below this line is part
+of the OKF spec itself unless explicitly labeled as such.
 
-## Bundle Structure
+## Bundle Structure (this repo's generator output)
 
 ```text
 okf_bundle/
@@ -14,25 +30,32 @@ okf_bundle/
   playbooks/
   tables/
   glossary/
-  README.md
-  bundle_manifest.yaml
+  README.md              <- this repo's bundle-root index (OKF's own
+  bundle_manifest.yaml       reserved filename is `index.md` — see below)
 ```
 
-Each concept is one markdown file under its typed directory.
+Each concept is one markdown file under its typed directory. Note this
+generator writes `README.md` rather than OKF's reserved `index.md` for
+the bundle-root index, for GitHub-rendering convenience — a deliberate,
+repo-specific divergence from the spec's own convention, not an error.
 
-## Frontmatter Contract
+## Frontmatter Contract (this repo's enterprise profile — not the OKF spec)
 
-Every concept document includes these required fields:
+The OKF v0.1 spec requires only `type`, with `title`, `description`,
+`resource`, `tags`, and `timestamp` merely recommended. This repo's
+generator and validator additionally require every field below —
+see [`docs/05-frontmatter-and-fields.md`](05-frontmatter-and-fields.md)
+for why:
 
-- `id`
-- `type`
-- `title`
-- `description`
-- `tags`
-- `resource`
-- `sources`
-- `relationships`
-- `timestamp`
+- `id` — repo extension
+- `type` — **the one spec-required field**
+- `title` — spec-recommended, repo-required
+- `description` — spec-recommended, repo-required
+- `tags` — spec-recommended, repo-required
+- `resource` — spec-recommended, repo-required
+- `sources` — repo extension
+- `relationships` — repo extension
+- `timestamp` — spec-recommended, repo-required
 
 Example:
 

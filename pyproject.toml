@@ -1,6 +1,6 @@
 [project]
 name = "enterprise-okf-ai"
-version = "0.1.0"
+version = "0.2.0"
 description = "Enterprise Knowledge Hub powered by Open Knowledge Format (OKF), RAG, and AI agents"
 readme = "README.md"
 requires-python = ">=3.11"

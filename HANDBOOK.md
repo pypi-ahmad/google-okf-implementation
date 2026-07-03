@@ -10,6 +10,13 @@ Operational and technical manual for onboarding, running, validating, and mainta
 - contributors preparing production-ready changes
 - operators validating end-to-end behavior before release
 
+**New to OKF itself, not just this repo?** This handbook assumes you
+already know what OKF is. If you don't, start with
+[`docs/00-overview.md`](docs/00-overview.md) instead — a numbered,
+zero-to-mastery learning path (`docs/00` through `docs/11`) that
+teaches the format from first principles before this repo's own
+conventions.
+
 ### Role-based navigation
 
 - New contributor path: [Tutorial lane](#tutorial-lane-first-successful-run) -> [Reference lane](#reference-lane-lookup-details)
@@ -61,20 +68,35 @@ Artifacts produced:
 ### Build an OKF bundle from source docs
 
 ```bash
-uv run enterprise-okf-ai build-okf examples/enterprise_docs artifacts/local_okf_bundle
+uv run enterprise-okf-ai build-okf examples/enterprise_docs okf_bundle
 ```
+
+`retrieve-search`/`agent-ask` below always read the default paths from
+`Settings` (`okf_bundle/`, `vector_db/chroma/`) — build into `okf_bundle`
+as shown, or set `OKF_DIR`/`VECTOR_DIR` in `.env` to point at a custom
+location instead.
 
 ### Validate bundle integrity
 
 ```bash
-uv run enterprise-okf-ai okf-validate --okf-dir artifacts/local_okf_bundle
+uv run enterprise-okf-ai okf-validate --okf-dir okf_bundle
 ```
 
 ### Build graph artifacts
 
 ```bash
-uv run enterprise-okf-ai graph-build --okf-dir artifacts/local_okf_bundle
+uv run enterprise-okf-ai graph-build --okf-dir okf_bundle
 ```
+
+### Build the vector index
+
+```bash
+uv run enterprise-okf-ai index-build --okf-dir okf_bundle
+```
+
+Required before `retrieve-search`/`agent-ask` — they read from this
+persisted index, not the bundle directly. Idempotent: re-run after any
+bundle change.
 
 ### Run retrieval query with traces
 
@@ -119,9 +141,10 @@ make handbook-pdf
 - Grounded answer: response based on retrieved evidence and citations.
 - Abstention: explicit unsupported-answer behavior when evidence is weak.
 
-### Core frontmatter contract
+### Core frontmatter contract (this repo's enterprise profile)
 
-Required keys in each concept document:
+The OKF v0.1 spec itself requires only `type`. This repo's own
+generator/validator additionally require:
 - `id`
 - `type`
 - `title`
@@ -131,6 +154,11 @@ Required keys in each concept document:
 - `sources`
 - `relationships`
 - `timestamp`
+
+See [`docs/05-frontmatter-and-fields.md`](docs/05-frontmatter-and-fields.md)
+for the full spec-vs-extension breakdown — this distinction is easy to
+miss and worth reading before assuming any of the above is an OKF
+requirement.
 
 ### Configuration reference
 
@@ -262,10 +290,6 @@ Current tests may show a `chromadb` deprecation warning (`asyncio.iscoroutinefun
   - repository source/config,
   - executable command output,
   - official external references.
-
-## Appendix: Environment-specific notes from this session
-
-This environment originally exposed a non-functional mounted `.git` path. A local git-dir workaround (`.git-local`) was used to run git operations safely in-session. This is not a project runtime requirement and should not be treated as standard setup for normal clones.
 
 ## Official References and Sources
 

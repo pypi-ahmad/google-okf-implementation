@@ -15,6 +15,11 @@ sources:
 - datasets/customer_profile.md
 relationships:
 - type: references
+  target_id: table:orders-fact
+  target_type: table
+  target_title: Orders Fact
+  path: tables/orders-fact.md
+- type: references
   target_id: api:orders-api
   target_type: api
   target_title: Orders API
@@ -24,6 +29,11 @@ relationships:
   target_type: metric
   target_title: Monthly Active Users
   path: metrics/monthly-active-users.md
+- type: references
+  target_id: playbook:payment-failure-playbook
+  target_type: playbook
+  target_title: Payment Failure Playbook
+  path: playbooks/payment-failure-playbook.md
 timestamp: '2026-07-02T21:01:16.067947+00:00'
 ---
 
@@ -39,8 +49,10 @@ Primary customer dimension used across retention reporting, segmentation models,
 `dataset`, `datasets`, `enterprise-docs`, `examples`, `markdown`
 
 ## Relationships
+- [Orders Fact](../tables/orders-fact.md) (`table:orders-fact`, type=`table`)
 - [Orders API](../apis/orders-api.md) (`api:orders-api`, type=`api`)
 - [Monthly Active Users](../metrics/monthly-active-users.md) (`metric:monthly-active-users`, type=`metric`)
+- [Payment Failure Playbook](../playbooks/payment-failure-playbook.md) (`playbook:payment-failure-playbook`, type=`playbook`)
 
 ## Knowledge Notes
 ### Excerpt 1

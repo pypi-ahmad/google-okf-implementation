@@ -14,7 +14,9 @@ Use this checklist before publishing `enterprise-okf-ai` to GitHub or creating a
 
 - [ ] `python scripts/generate_tutorial.py` regenerates `notebooks/tutorial.ipynb`.
 - [ ] `python scripts/validate_notebook.py notebooks/tutorial.ipynb` passes.
+- [ ] `python scripts/check_docs_links.py` (or `make docs-check-links`) reports no broken internal links.
 - [ ] `README.md` matches current CLI/API/UI commands.
+- [ ] `docs/00-overview.md` through `docs/11-next-steps.md` (the zero-to-mastery learning path) are up to date.
 - [ ] `docs/architecture.md`, `docs/okf-format.md`, `docs/retrieval.md`, `docs/agent.md`, and `docs/evaluation.md` are up to date.
 - [ ] `docs/release-checklist.md` is reviewed and completed.
 
@@ -28,6 +30,10 @@ Use this checklist before publishing `enterprise-okf-ai` to GitHub or creating a
 
 - [ ] CLI smoke checks pass:
   - `enterprise-okf-ai --help`
+  - `enterprise-okf-ai build-okf examples/enterprise_docs okf_bundle`
+  - `enterprise-okf-ai okf-validate --okf-dir okf_bundle`
+  - `enterprise-okf-ai graph-build --okf-dir okf_bundle`
+  - `enterprise-okf-ai index-build --okf-dir okf_bundle`
   - `enterprise-okf-ai retrieve-search "Which API updates orders?" --with-trace`
   - `enterprise-okf-ai agent-ask "Which API updates order status?"`
 - [ ] FastAPI starts and responds:

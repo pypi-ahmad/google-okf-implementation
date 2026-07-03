@@ -22,11 +22,6 @@ relationships:
   target_type: glossary
   target_title: Sla
   path: glossary/sla.md
-- type: references
-  target_id: metric:monthly-active-users
-  target_type: metric
-  target_title: Monthly Active Users
-  path: metrics/monthly-active-users.md
 timestamp: '2026-07-02T21:06:33.340078+00:00'
 ---
 
@@ -44,7 +39,6 @@ Monthly Active Users metric used by growth and executive dashboards.
 ## Relationships
 - [Rpo](rpo.md) (`glossary:rpo`, type=`glossary`)
 - [Sla](sla.md) (`glossary:sla`, type=`glossary`)
-- [Monthly Active Users](../metrics/monthly-active-users.md) (`metric:monthly-active-users`, type=`metric`)
 
 ## Knowledge Notes
 ### Excerpt 1

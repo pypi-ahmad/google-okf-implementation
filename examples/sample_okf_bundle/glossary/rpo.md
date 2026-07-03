@@ -13,20 +13,10 @@ sources:
 - glossary/platform_glossary.md
 relationships:
 - type: references
-  target_id: glossary:mau
-  target_type: glossary
-  target_title: Mau
-  path: glossary/mau.md
-- type: references
   target_id: glossary:sla
   target_type: glossary
   target_title: Sla
   path: glossary/sla.md
-- type: references
-  target_id: metric:monthly-active-users
-  target_type: metric
-  target_title: Monthly Active Users
-  path: metrics/monthly-active-users.md
 timestamp: '2026-07-02T21:06:33.340078+00:00'
 ---
 
@@ -42,9 +32,7 @@ Recovery point objective for maximum acceptable data loss window.
 `enterprise-docs`, `examples`, `glossary`, `markdown`
 
 ## Relationships
-- [Mau](mau.md) (`glossary:mau`, type=`glossary`)
 - [Sla](sla.md) (`glossary:sla`, type=`glossary`)
-- [Monthly Active Users](../metrics/monthly-active-users.md) (`metric:monthly-active-users`, type=`metric`)
 
 ## Knowledge Notes
 ### Excerpt 1

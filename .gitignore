@@ -19,6 +19,7 @@ vector_db/chroma/
 vector_db/*.sqlite3
 knowledge_graph/graph.html
 knowledge_graph/*.json
+knowledge_graph/*.graphml
 docs/generated/
 
 .DS_Store
