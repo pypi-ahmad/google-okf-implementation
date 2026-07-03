@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d6" for="edge" attr.name="relation" attr.type="string"/>
+<key id="d5" for="node" attr.name="resource" attr.type="string"/>
+<key id="d4" for="node" attr.name="tags" attr.type="string"/>
+<key id="d3" for="node" attr.name="description" attr.type="string"/>
+<key id="d2" for="node" attr.name="path" attr.type="string"/>
+<key id="d1" for="node" attr.name="type" attr.type="string"/>
+<key id="d0" for="node" attr.name="title" attr.type="string"/>
+<graph edgedefault="directed"><node id="api:orders-api">
+  <data key="d0">Orders API</data>
+  <data key="d1">api</data>
+  <data key="d2">examples/sample_okf_bundle/apis/orders-api.md</data>
+  <data key="d3">`PATCH /v2/orders/{order_id}` updates order status and fulfillment metadata for downstream analytics.</data>
+  <data key="d4">api,apis,enterprise-docs,examples,markdown</data>
+  <data key="d5">apis/orders_api.md</data>
+</node>
+<node id="dataset:customer-profile-dataset">
+  <data key="d0">Customer Profile Dataset</data>
+  <data key="d1">dataset</data>
+  <data key="d2">examples/sample_okf_bundle/datasets/customer-profile-dataset.md</data>
+  <data key="d3">Primary customer dimension used across retention reporting, segmentation models, and order risk policies.</data>
+  <data key="d4">dataset,datasets,enterprise-docs,examples,markdown</data>
+  <data key="d5">datasets/customer_profile.md</data>
+</node>
+<node id="glossary:mau">
+  <data key="d0">Mau</data>
+  <data key="d1">glossary</data>
+  <data key="d2">examples/sample_okf_bundle/glossary/mau.md</data>
+  <data key="d3">Monthly Active Users metric used by growth and executive dashboards.</data>
+  <data key="d4">enterprise-docs,examples,glossary,markdown</data>
+  <data key="d5">glossary/platform_glossary.md</data>
+</node>
+<node id="glossary:rpo">
+  <data key="d0">Rpo</data>
+  <data key="d1">glossary</data>
+  <data key="d2">examples/sample_okf_bundle/glossary/rpo.md</data>
+  <data key="d3">Recovery point objective for maximum acceptable data loss window.</data>
+  <data key="d4">enterprise-docs,examples,glossary,markdown</data>
+  <data key="d5">glossary/platform_glossary.md</data>
+</node>
+<node id="glossary:sla">
+  <data key="d0">Sla</data>
+  <data key="d1">glossary</data>
+  <data key="d2">examples/sample_okf_bundle/glossary/sla.md</data>
+  <data key="d3">Service level agreement defining freshness and reliability objectives.</data>
+  <data key="d4">enterprise-docs,examples,glossary,markdown</data>
+  <data key="d5">glossary/platform_glossary.md</data>
+</node>
+<node id="metric:monthly-active-users">
+  <data key="d0">Monthly Active Users</data>
+  <data key="d1">metric</data>
+  <data key="d2">examples/sample_okf_bundle/metrics/monthly-active-users.md</data>
+  <data key="d3">Monthly Active Users (MAU) is calculated as the distinct count of active customer IDs in the analytics month.</data>
+  <data key="d4">enterprise-docs,examples,markdown,metric,metrics</data>
+  <data key="d5">metrics/monthly_active_users.md</data>
+</node>
+<node id="playbook:incident-payment-outage">
+  <data key="d0">Incident: Payment Outage</data>
+  <data key="d1">playbook</data>
+  <data key="d2">examples/sample_okf_bundle/playbooks/incident-payment-outage.md</data>
+  <data key="d3">Checkout failures reached 12% for 28 minutes due to gateway retry storm.</data>
+  <data key="d4">enterprise-docs,examples,html,incidents,playbook</data>
+  <data key="d5">incidents/payment_outage.html</data>
+</node>
+<node id="playbook:payment-failure-playbook">
+  <data key="d0">Payment Failure Playbook</data>
+  <data key="d1">playbook</data>
+  <data key="d2">examples/sample_okf_bundle/playbooks/payment-failure-playbook.md</data>
+  <data key="d3">Checkout payment error rate above 3% for 5 consecutive minutes.</data>
+  <data key="d4">enterprise-docs,examples,markdown,playbook,playbooks</data>
+  <data key="d5">playbooks/payment_failure_playbook.md</data>
+</node>
+<node id="table:orders-fact">
+  <data key="d0">Orders Fact</data>
+  <data key="d1">table</data>
+  <data key="d2">examples/sample_okf_bundle/tables/orders-fact.md</data>
+  <data key="d3">column,type,description,owner</data>
+  <data key="d4">csv,enterprise-docs,examples,table,tables</data>
+  <data key="d5">tables/orders_fact.csv</data>
+</node>
+<edge source="api:orders-api" target="dataset:customer-profile-dataset">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="api:orders-api" target="metric:monthly-active-users">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="api:orders-api" target="table:orders-fact">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="dataset:customer-profile-dataset" target="api:orders-api">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="dataset:customer-profile-dataset" target="metric:monthly-active-users">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:mau" target="glossary:rpo">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:mau" target="glossary:sla">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:mau" target="metric:monthly-active-users">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:rpo" target="glossary:mau">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:rpo" target="glossary:sla">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:rpo" target="metric:monthly-active-users">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:sla" target="glossary:mau">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:sla" target="glossary:rpo">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="glossary:sla" target="metric:monthly-active-users">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="metric:monthly-active-users" target="api:orders-api">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="metric:monthly-active-users" target="dataset:customer-profile-dataset">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="metric:monthly-active-users" target="glossary:mau">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="playbook:incident-payment-outage" target="api:orders-api">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="playbook:incident-payment-outage" target="playbook:payment-failure-playbook">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="playbook:incident-payment-outage" target="table:orders-fact">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="playbook:payment-failure-playbook" target="api:orders-api">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="playbook:payment-failure-playbook" target="dataset:customer-profile-dataset">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="playbook:payment-failure-playbook" target="table:orders-fact">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="table:orders-fact" target="api:orders-api">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+<edge source="table:orders-fact" target="dataset:customer-profile-dataset">
+  <data key="d6">frontmatter_relationship</data>
+</edge>
+</graph></graphml>

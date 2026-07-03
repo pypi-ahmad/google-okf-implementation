@@ -1,0 +1,24 @@
+project:
+  name: enterprise-okf-ai
+  environment: local
+
+paths:
+  raw_data_dir: examples/enterprise_docs
+  okf_dir: artifacts/local_okf_bundle
+  graph_dir: artifacts/local_graph
+  vector_dir: artifacts/local_vector_db/chroma
+
+ingestion:
+  recursive: true
+  chunk_size_chars: 1200
+  chunk_overlap_chars: 150
+  fail_fast: true
+
+retrieval:
+  route: auto
+  top_k: 8
+
+agent:
+  top_k: 8
+  min_top_score: 0.2
+  min_evidence_hits: 1

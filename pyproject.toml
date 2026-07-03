@@ -1,0 +1,102 @@
+[project]
+name = "enterprise-okf-ai"
+version = "0.1.0"
+description = "Enterprise Knowledge Hub powered by Open Knowledge Format (OKF), RAG, and AI agents"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Ahmad" }]
+keywords = [
+  "okf",
+  "knowledge-engineering",
+  "rag",
+  "agentic-ai",
+  "retrieval",
+  "enterprise-ai",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "beautifulsoup4>=4.12.3",
+  "chromadb>=1.0.15",
+  "fastapi>=0.116.0",
+  "fpdf2>=2.8.3",
+  "httpx>=0.28.1",
+  "jinja2>=3.1.6",
+  "langchain>=0.3.26",
+  "langgraph>=0.5.1",
+  "loguru>=0.7.3",
+  "markdown-it-py>=3.0.0",
+  "neo4j>=5.28.1",
+  "numpy>=2.3.1",
+  "orjson>=3.10.18",
+  "pandas>=2.3.1",
+  "pydantic>=2.11.7",
+  "pydantic-settings>=2.10.1",
+  "pypdf>=6.0.0",
+  "python-docx>=1.2.0",
+  "python-frontmatter>=1.1.0",
+  "python-slugify>=8.0.4",
+  "pyvis>=0.3.2",
+  "pyyaml>=6.0.2",
+  "rank-bm25>=0.2.2",
+  "rapidfuzz>=3.13.0",
+  "streamlit>=1.37.0",
+  "typer>=0.16.0",
+  "uvicorn[standard]>=0.35.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black>=24.10.0",
+  "ipykernel>=6.30.0",
+  "mypy>=1.16.1",
+  "pre-commit>=3.8.0",
+  "pytest>=8.4.1",
+  "pytest-asyncio>=1.0.0",
+  "pytest-cov>=6.2.1",
+  "ruff>=0.12.2",
+]
+
+[project.scripts]
+enterprise-okf-ai = "enterprise_okf_ai.cli.main:app"
+okfhub = "okfhub.cli.main:app"
+
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/enterprise_okf_ai", "src/okfhub"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "SIM"]
+ignore = ["UP017"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 140
+target-version = ["py311"]

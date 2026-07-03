@@ -1,0 +1,5 @@
+column,type,description,owner
+order_id,STRING,Unique order identifier,Data Platform
+customer_id,STRING,Customer key joined to Customer Profile Dataset,Data Platform
+order_status,STRING,Normalized fulfillment status consumed by Orders API,Order Platform
+updated_at,TIMESTAMP,Last status update timestamp,Data Platform

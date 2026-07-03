@@ -1,0 +1,20 @@
+[
+  {
+    "example_id": "q1_orders_api",
+    "question": "Which API updates customer orders?",
+    "expected_concepts": ["apis/orders-api"],
+    "reference_answer": "The Orders API endpoint PATCH /v2/orders/{order_id} updates customer order status and fulfillment metadata."
+  },
+  {
+    "example_id": "q2_mau_metric",
+    "question": "How is Monthly Active Users calculated?",
+    "expected_concepts": ["metrics/monthly-active-users", "sql/monthly-active-users"],
+    "reference_answer": "MAU is the count of distinct user_id in the month for activity events such as session_start, purchase, and support_ticket."
+  },
+  {
+    "example_id": "q3_payment_runbook",
+    "question": "Show me the runbook for payment failures.",
+    "expected_concepts": ["playbooks/payment-failure-runbook"],
+    "reference_answer": "The payment failure runbook includes trigger criteria, dashboard checks, DB connectivity validation, and adapter rollback steps."
+  }
+]

@@ -1,0 +1,40 @@
+okf_style_version: '0.1'
+source_root: examples/enterprise_docs
+concept_count: 9
+concepts:
+- id: api:orders-api
+  type: api
+  title: Orders API
+  path: apis/orders-api.md
+- id: dataset:customer-profile-dataset
+  type: dataset
+  title: Customer Profile Dataset
+  path: datasets/customer-profile-dataset.md
+- id: glossary:mau
+  type: glossary
+  title: Mau
+  path: glossary/mau.md
+- id: glossary:rpo
+  type: glossary
+  title: Rpo
+  path: glossary/rpo.md
+- id: glossary:sla
+  type: glossary
+  title: Sla
+  path: glossary/sla.md
+- id: metric:monthly-active-users
+  type: metric
+  title: Monthly Active Users
+  path: metrics/monthly-active-users.md
+- id: playbook:incident-payment-outage
+  type: playbook
+  title: 'Incident: Payment Outage'
+  path: playbooks/incident-payment-outage.md
+- id: playbook:payment-failure-playbook
+  type: playbook
+  title: Payment Failure Playbook
+  path: playbooks/payment-failure-playbook.md
+- id: table:orders-fact
+  type: table
+  title: Orders Fact
+  path: tables/orders-fact.md

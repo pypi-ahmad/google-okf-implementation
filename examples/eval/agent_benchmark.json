@@ -1,0 +1,46 @@
+[
+  {
+    "case_id": "agent-001",
+    "question": "Which API updates order status and what dataset does it depend on?",
+    "expected_concepts": [
+      "apis/orders-api",
+      "datasets/customer-profile-dataset"
+    ],
+    "support_terms": [
+      "PATCH /v2/orders/{order_id}",
+      "Customer Profile Dataset"
+    ],
+    "should_abstain": false
+  },
+  {
+    "case_id": "agent-002",
+    "question": "How is Monthly Active Users calculated?",
+    "expected_concepts": [
+      "metrics/monthly-active-users"
+    ],
+    "support_terms": [
+      "COUNT(DISTINCT customer_id)",
+      "analytics month"
+    ],
+    "should_abstain": false
+  },
+  {
+    "case_id": "agent-003",
+    "question": "Show me the runbook for payment failures.",
+    "expected_concepts": [
+      "playbooks/payment-failure-playbook"
+    ],
+    "support_terms": [
+      "error rate above 3%",
+      "Triage Steps"
+    ],
+    "should_abstain": false
+  },
+  {
+    "case_id": "agent-004",
+    "question": "What is the legal data retention policy for payroll records?",
+    "expected_concepts": [],
+    "support_terms": [],
+    "should_abstain": true
+  }
+]

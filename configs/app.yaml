@@ -1,0 +1,18 @@
+project:
+  name: enterprise-okf-ai
+  environment: development
+
+paths:
+  raw_data_dir: data/raw
+  okf_dir: okf_bundle
+  graph_dir: knowledge_graph
+  vector_dir: vector_db/chroma
+
+llm:
+  provider: ollama
+  chat_model: qwen3:8b
+  embedding_model: nomic-embed-text
+
+api:
+  host: 0.0.0.0
+  port: 8000

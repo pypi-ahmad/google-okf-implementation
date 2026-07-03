@@ -1,0 +1,44 @@
+name: Notebook Validation
+
+on:
+  pull_request:
+    paths:
+      - "notebooks/**"
+      - "scripts/generate_tutorial.py"
+      - "scripts/validate_notebook.py"
+      - ".github/workflows/notebook-validation.yml"
+  push:
+    branches: ["main", "master"]
+    paths:
+      - "notebooks/**"
+      - "scripts/generate_tutorial.py"
+      - "scripts/validate_notebook.py"
+      - ".github/workflows/notebook-validation.yml"
+  workflow_dispatch:
+
+jobs:
+  notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync dependencies (frozen lockfile)
+        run: uv sync --extra dev --frozen
+
+      - name: Regenerate tutorial notebook
+        run: uv run --no-sync python scripts/generate_tutorial.py
+
+      - name: Validate notebook contract
+        run: uv run --no-sync python scripts/validate_notebook.py notebooks/tutorial.ipynb --json
+
+      - name: Assert notebook committed
+        run: git diff --exit-code notebooks/tutorial.ipynb

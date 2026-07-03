@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+      - id: ruff-format
+
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        args: ["--line-length=140"]
+
+  - repo: local
+    hooks:
+      - id: mypy-enterprise
+        name: mypy (enterprise package)
+        entry: uv run --no-sync mypy src/enterprise_okf_ai --python-version 3.12
+        language: system
+        pass_filenames: false
+      - id: pytest-smoke
+        name: pytest (smoke)
+        entry: uv run --no-sync pytest -q tests/unit/test_prompt8_notebook_validator.py tests/unit/test_prompt8_api_runtime.py
+        language: system
+        pass_filenames: false
+      - id: validate-tutorial-notebook
+        name: validate tutorial notebook
+        entry: uv run --no-sync python scripts/validate_notebook.py notebooks/tutorial.ipynb
+        language: system
+        pass_filenames: false

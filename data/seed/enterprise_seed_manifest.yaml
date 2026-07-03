@@ -1,0 +1,28 @@
+version: 1
+generated_at: "2026-07-03T00:00:00+00:00"
+
+raw_documents:
+  - path: examples/enterprise_docs/apis/orders_api.md
+    type: markdown
+  - path: examples/enterprise_docs/datasets/customer_profile.md
+    type: markdown
+  - path: examples/enterprise_docs/metrics/monthly_active_users.md
+    type: markdown
+  - path: examples/enterprise_docs/playbooks/payment_failure_playbook.md
+    type: markdown
+  - path: examples/enterprise_docs/incidents/payment_outage.html
+    type: html
+  - path: examples/enterprise_docs/tables/orders_fact.csv
+    type: csv
+  - path: examples/enterprise_docs/glossary/platform_glossary.md
+    type: markdown
+
+compiled_bundle:
+  path: examples/sample_okf_bundle
+  concept_count: 9
+
+evaluation_sets:
+  - path: examples/eval/gold_qa.json
+    kind: retrieval_and_answer_quality
+  - path: examples/eval/agent_benchmark.json
+    kind: agent_orchestration
