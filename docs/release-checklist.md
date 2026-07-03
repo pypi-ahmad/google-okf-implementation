@@ -30,6 +30,8 @@ Use this checklist before publishing `enterprise-okf-ai` to GitHub or creating a
 
 - [ ] CLI smoke checks pass:
   - `enterprise-okf-ai --help`
+  - `enterprise-okf-ai okf-spec-validate --okf-dir examples/00_minimal_okf`
+  - `enterprise-okf-ai okf-spec-validate --okf-dir examples/sample_okf_bundle`
   - `enterprise-okf-ai build-okf examples/enterprise_docs okf_bundle`
   - `enterprise-okf-ai okf-validate --okf-dir okf_bundle`
   - `enterprise-okf-ai graph-build --okf-dir okf_bundle`

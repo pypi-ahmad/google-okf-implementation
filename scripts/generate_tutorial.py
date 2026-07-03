@@ -84,7 +84,10 @@ def build_notebook() -> dict[str, object]:
             - graph-structured reasoning for dependency and ownership questions.
 
             The Open Knowledge Format (OKF) addresses this by standardizing knowledge
-            as markdown files with strict YAML frontmatter and explicit relationships.
+            as markdown files with minimal YAML frontmatter (the spec requires only
+            a non-empty `type`). This repository then layers a stricter enterprise
+            profile on top (extra required fields + explicit `relationships`) so it
+            can build deterministic graphs and validation gates.
             """
         )
     )
@@ -191,11 +194,12 @@ def build_notebook() -> dict[str, object]:
             """
             ## 5. OKF Bundle Generation
 
-            Next we compile normalized documents into an OKF bundle:
+            Next we compile normalized documents into an OKF-shaped bundle:
 
             - stable concept directories (`apis/`, `datasets/`, `metrics/`, `playbooks/`, `tables/`, `glossary/`),
-            - markdown files with strict YAML frontmatter,
-            - deduplicated concept mapping and explicit relationships.
+            - markdown concept files with YAML frontmatter (`type` required by the spec),
+            - additional enterprise-required metadata and explicit relationships (repo convention),
+            - deduplicated concept mapping.
             """
         )
     )

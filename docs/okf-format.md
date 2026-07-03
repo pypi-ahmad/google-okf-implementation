@@ -30,14 +30,14 @@ okf_bundle/
   playbooks/
   tables/
   glossary/
-  README.md              <- this repo's bundle-root index (OKF's own
-  bundle_manifest.yaml       reserved filename is `index.md` — see below)
+  index.md               <- bundle-root index (OKF reserved filename)
+  bundle_manifest.yaml
 ```
 
-Each concept is one markdown file under its typed directory. Note this
-generator writes `README.md` rather than OKF's reserved `index.md` for
-the bundle-root index, for GitHub-rendering convenience — a deliberate,
-repo-specific divergence from the spec's own convention, not an error.
+Each concept is one markdown file under its typed directory. The
+bundle-root `index.md` includes an optional `okf_version: "0.1"`
+declaration in its frontmatter (the only place the spec permits
+frontmatter in an `index.md`).
 
 ## Frontmatter Contract (this repo's enterprise profile — not the OKF spec)
 

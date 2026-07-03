@@ -47,6 +47,10 @@ plain English the first time it matters.
 Read these in order. Each one is short (5–15 minutes) and ends with
 something concrete you did, not just read.
 
+**Two tracks:** docs 00–06 are about OKF v0.1 *as a spec you can use
+without this repo*. Docs 07–11 are about *this repository's stricter
+enterprise profile and pipeline* built on top of OKF.
+
 | # | Doc | You'll be able to... |
 |---|-----|------------------------|
 | 00 | *(this page)* | Tell OKF-the-spec apart from this repo's pipeline. |

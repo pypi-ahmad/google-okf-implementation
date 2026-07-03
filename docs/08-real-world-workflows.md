@@ -36,6 +36,10 @@ walkthrough.
 uv run enterprise-okf-ai build-okf examples/enterprise_docs okf_bundle
 ```
 
+`build-okf` treats `okf_bundle/` as a build artifact directory and
+overwrites it on each run (it deletes any existing `okf_bundle/` first).
+This avoids stale files from older runs and keeps output deterministic.
+
 `examples/enterprise_docs/` contains realistic, messy input: two
 slightly different Markdown files describing the same API (testing
 deduplication), a CSV schema, an HTML incident report, and a glossary
@@ -46,7 +50,7 @@ table. **Expected output** (concept count and file list, abbreviated):
   "concept_count": 9,
   "concepts_by_type": {"api": 1, "dataset": 1, "glossary": 3, "metric": 1, "playbook": 2, "table": 1},
   "deduplicated_concepts": 1,
-  "files_written": ["okf_bundle/apis/orders-api.md", "... 8 more concept files", "okf_bundle/README.md", "okf_bundle/bundle_manifest.yaml"]
+  "files_written": ["okf_bundle/apis/orders-api.md", "... 8 more concept files", "okf_bundle/index.md", "okf_bundle/bundle_manifest.yaml"]
 }
 ```
 
@@ -55,9 +59,9 @@ table. **Expected output** (concept count and file list, abbreviated):
 concept and merged them — see
 [`docs/okf-format.md`](okf-format.md#determinism-and-reproducibility).
 
-Note this generator writes `README.md` as the bundle-root index, not
-the spec's `index.md` — a repo-specific convention flagged in
-[05 — Frontmatter & Fields](05-frontmatter-and-fields.md#are-enterprise-profile-bundles-still-valid-okf).
+The generator writes a bundle-root `index.md` (OKF reserved filename)
+and includes an optional `okf_version: \"0.1\"` declaration in its
+frontmatter (spec §11).
 
 ## Step 2 — validate it
 

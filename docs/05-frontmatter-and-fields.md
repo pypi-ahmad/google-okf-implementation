@@ -87,14 +87,11 @@ to understand `id`, `sources`, or `relationships` — they'd simply be
 extra frontmatter keys a lenient consumer ignores, per spec §4.1's
 "Extensions" clause.
 
-One deliberate divergence to know about: this repo's generator writes
-the bundle-root index as `README.md` (for GitHub-rendering convenience),
-not the spec's reserved `index.md`. If you're building a bundle that
-needs to interoperate with other OKF tooling (like the reference
-viewer), prefer `index.md` as shown in
-[04 — Bundle Structure](04-bundle-structure.md) and
-[`examples/00_minimal_okf/`](../examples/00_minimal_okf/), not the
-`README.md` convention this repo's generator happens to use internally.
+Note: OKF reserves `index.md` and `log.md` (spec §3.1). This repo's
+generator writes a bundle-root `index.md` and includes an optional
+`okf_version: "0.1"` declaration there (spec §11). If you create a
+bundle-root `README.md` instead, it's treated as a normal concept file
+under the spec and must have frontmatter like any other concept.
 
 ## Practical rule of thumb
 

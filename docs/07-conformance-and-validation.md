@@ -22,6 +22,16 @@ That's it. Missing optional fields, unknown `type` values, broken links,
 and missing `index.md` files are all explicitly **not** conformance
 failures.
 
+You can check this spec-level bar directly with the CLI:
+
+```bash
+uv run enterprise-okf-ai okf-spec-validate --okf-dir examples/00_minimal_okf
+```
+
+**Expected output:** `"passed": true` with `errors: 0`. This command is
+*only* the OKF v0.1 conformance rules; it does not apply any of this
+repo's extra enterprise requirements.
+
 ### This repo's strict validator (an additional, stricter gate)
 
 `enterprise-okf-ai okf-validate` runs
