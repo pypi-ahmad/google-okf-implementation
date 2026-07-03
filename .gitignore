@@ -10,6 +10,7 @@ __pycache__/
 .pre-commit-cache/
 .uv-cache/
 .ipynb_checkpoints/
+.git-local/
 
 artifacts/
 data/raw/
